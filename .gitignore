@@ -1,0 +1,26 @@
+# Environment variables and secret keys
+.env
+.env.local
+.env.*.local
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE & operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

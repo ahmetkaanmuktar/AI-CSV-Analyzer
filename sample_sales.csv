@@ -1,0 +1,17 @@
+Date,Product,Category,Quantity,Price,Revenue,City
+2024-01-05,Laptop,Electronics,2,15000,30000,Istanbul
+2024-01-06,Mouse,Electronics,10,250,2500,Ankara
+2024-01-07,Desk,Furniture,,3200,,Izmir
+2024-01-08,Chair,Furniture,4,1800,7200,
+2024-01-09,Monitor,Electronics,3,5400,16200,Istanbul
+2024-01-10,Keyboard,Electronics,7,900,6300,Bursa
+2024-01-11,Notebook,Stationery,50,45,2250,Ankara
+2024-01-12,Pen,Stationery,100,,,Izmir
+2024-01-13,Lamp,Furniture,5,650,3250,Istanbul
+2024-01-14,Headphones,Electronics,6,1200,7200,Antalya
+2024-01-15,Mouse,Electronics,8,250,2000,Istanbul
+2024-01-16,Laptop,Electronics,1,15000,15000,Ankara
+2024-01-17,Notebook,Stationery,30,45,1350,Istanbul
+2024-01-18,Chair,Furniture,2,1800,3600,Izmir
+2024-01-19,Monitor,Electronics,2,5400,10800,Bursa
+2024-01-20,Pen,Stationery,80,12,960,Istanbul
