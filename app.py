@@ -23,35 +23,37 @@ def index():
 
 @app.route("/analyze", methods=["POST"])
 def analyze_csv_endpoint():
-    """Handle CSV file uploads, process in-memory, and return analytical payload.
+    """Handle CSV file uploads, process in-memory, and return analytical payload."""
+    lang = request.form.get("lang", "en").strip().lower()
+    if lang not in ["tr", "en"]:
+        lang = "en"
 
-    Returns:
-        JSON response with status and dataset analytics or error message.
-    """
     if "file" not in request.files:
-        return jsonify({"success": False, "error": "Please select a CSV file to analyze."}), 400
+        err = "Lütfen analiz edilecek bir CSV dosyası seçin." if lang == "tr" else "Please select a CSV file to analyze."
+        return jsonify({"success": False, "error": err}), 400
 
     uploaded_file = request.files["file"]
 
     if not uploaded_file or uploaded_file.filename == "":
-        return jsonify({"success": False, "error": "No file was selected."}), 400
+        err = "Herhangi bir dosya seçilmedi." if lang == "tr" else "No file was selected."
+        return jsonify({"success": False, "error": err}), 400
 
     filename = uploaded_file.filename
     if not filename.lower().endswith(".csv"):
-        return jsonify({"success": False, "error": "Invalid file format. Please upload a .csv file."}), 400
+        err = "Geçersiz dosya türü. Lütfen yalnızca .csv uzantılı dosya yükleyin." if lang == "tr" else "Invalid file format. Please upload a .csv file."
+        return jsonify({"success": False, "error": err}), 400
 
     try:
-        # In-memory streaming to avoid unnecessary disk writes and persist user data
         raw_bytes = uploaded_file.read()
         if not raw_bytes or len(raw_bytes.strip()) == 0:
-            return jsonify({"success": False, "error": "The uploaded CSV file is empty."}), 400
+            err = "Yüklenen CSV dosyası boş." if lang == "tr" else "The uploaded CSV file is empty."
+            return jsonify({"success": False, "error": err}), 400
 
-        # Strip Excel UTF-8 BOM if present
         text_content = raw_bytes.decode("utf-8-sig", errors="replace")
         stream = io.StringIO(text_content)
 
         columns, data_rows = parse_csv_stream(stream)
-        results = run_full_analysis(columns, data_rows)
+        results = run_full_analysis(columns, data_rows, lang=lang)
         results["filename"] = filename
 
         return jsonify({"success": True, "data": results})
@@ -59,25 +61,25 @@ def analyze_csv_endpoint():
     except ValueError as ve:
         return jsonify({"success": False, "error": str(ve)}), 400
     except Exception as e:
-        return jsonify({"success": False, "error": f"Error processing CSV: {str(e)}"}), 500
+        return jsonify({"success": False, "error": f"Error: {str(e)}"}), 500
 
 
 @app.route("/sample", methods=["GET"])
 def analyze_sample_endpoint():
-    """Quick-test endpoint to analyze the bundled sample_sales.csv dataset.
+    """Quick-test endpoint to analyze the bundled sample_sales.csv dataset."""
+    lang = request.args.get("lang", "en").strip().lower()
+    if lang not in ["tr", "en"]:
+        lang = "en"
 
-    Returns:
-        JSON response with the sample dataset analytics.
-    """
     try:
         base_dir = os.path.dirname(os.path.abspath(__file__))
         sample_path = os.path.join(base_dir, "sample_sales.csv")
         columns, data_rows = read_csv(sample_path)
-        results = run_full_analysis(columns, data_rows)
-        results["filename"] = "sample_sales.csv (Demo Dataset)"
+        results = run_full_analysis(columns, data_rows, lang=lang)
+        results["filename"] = "sample_sales.csv (Demo Veri)" if lang == "tr" else "sample_sales.csv (Demo Dataset)"
         return jsonify({"success": True, "data": results})
     except Exception as e:
-        return jsonify({"success": False, "error": f"Failed to load sample dataset: {str(e)}"}), 500
+        return jsonify({"success": False, "error": f"Failed: {str(e)}"}), 500
 
 
 @app.errorhandler(413)
@@ -85,7 +87,7 @@ def handle_file_too_large(e):
     """Handle uploads exceeding maximum allowed size."""
     return jsonify({
         "success": False,
-        "error": "File size exceeds the 16 MB limit. Please upload a smaller CSV."
+        "error": "Dosya boyutu 16 MB sınırını aşıyor." if request.form.get("lang") == "tr" else "File size exceeds 16 MB limit."
     }), 413
 
 

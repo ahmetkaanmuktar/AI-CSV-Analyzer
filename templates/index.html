@@ -12,13 +12,19 @@
 </head>
 <body>
     <div class="app-container">
+        <!-- Top Utility Bar: Language Switcher -->
+        <div class="top-nav-bar">
+            <div class="brand-subtle">AI CSV Analyzer</div>
+            <div class="lang-switcher" role="group" aria-label="Language Selector">
+                <button type="button" class="lang-btn" id="langTrBtn" data-lang="tr">🇹🇷 TR</button>
+                <button type="button" class="lang-btn active" id="langEnBtn" data-lang="en">🇬🇧 EN</button>
+            </div>
+        </div>
+
         <!-- Hero Header -->
         <header class="hero-header">
-            <div class="badge-pill">
-                <span class="pulse-dot"></span> Production Ready • Stage 5
-            </div>
-            <h1 class="main-title">AI CSV Analyzer</h1>
-            <p class="subtitle">Upload your CSV dataset to receive automated statistical summaries and Google Gemini AI insights.</p>
+            <h1 class="main-title" data-i18n="hero_title">AI CSV Analyzer</h1>
+            <p class="subtitle" data-i18n="hero_subtitle">Upload your CSV dataset to receive automated statistical summaries and Google Gemini AI insights.</p>
         </header>
 
         <!-- Upload Card -->
@@ -35,9 +41,9 @@
                             <line x1="15" y1="15" x2="12" y2="12"></line>
                         </svg>
                     </div>
-                    <h3 class="drop-title">Drag & Drop CSV File Here</h3>
-                    <p class="drop-desc">or click to browse from your device (Max 16 MB)</p>
-                    <button type="button" class="btn btn-secondary select-btn" id="selectBtn">
+                    <h3 class="drop-title" data-i18n="drop_title">Drag & Drop CSV File Here</h3>
+                    <p class="drop-desc" data-i18n="drop_desc">or click to browse from your device (Max 16 MB)</p>
+                    <button type="button" class="btn btn-secondary select-btn" id="selectBtn" data-i18n="btn_choose">
                         Choose CSV File
                     </button>
                     <div class="selected-file-info" id="selectedFileInfo" style="display: none;">
@@ -50,9 +56,9 @@
                 <!-- Action Controls -->
                 <div class="action-bar">
                     <button type="submit" class="btn btn-primary" id="analyzeBtn">
-                        <span class="btn-icon">⚡</span> Analyze Dataset
+                        <span class="btn-icon">⚡</span> <span data-i18n="btn_analyze">Analyze Dataset</span>
                     </button>
-                    <button type="button" class="btn btn-outline" id="sampleDataBtn">
+                    <button type="button" class="btn btn-outline" id="sampleDataBtn" data-i18n="btn_demo">
                         Quick Demo with Sample (sample_sales.csv)
                     </button>
                 </div>
@@ -69,8 +75,8 @@
         <!-- Loading State -->
         <section class="loading-section card" id="loadingSection" style="display: none;" aria-live="polite">
             <div class="spinner-ring"></div>
-            <h3 class="loading-title">Analyzing your dataset...</h3>
-            <p class="loading-subtitle">Computing statistical distributions and generating AI business insights via Gemini.</p>
+            <h3 class="loading-title" data-i18n="loading_title">Analyzing your dataset...</h3>
+            <p class="loading-subtitle" data-i18n="loading_subtitle">Computing statistical distributions and generating AI business insights via Gemini.</p>
         </section>
 
         <!-- Results Dashboard -->
@@ -78,10 +84,10 @@
             <!-- Header Status Bar -->
             <div class="results-header-bar">
                 <div class="file-summary-title">
-                    <span>Analyzed Source:</span>
+                    <span data-i18n="res_source">Analyzed Source:</span>
                     <strong id="resFilename">sample_sales.csv</strong>
                 </div>
-                <button type="button" class="btn btn-sm btn-outline" id="printReportBtn">
+                <button type="button" class="btn btn-sm btn-outline" id="printReportBtn" data-i18n="btn_print">
                     🖨️ Print / Save as PDF
                 </button>
             </div>
@@ -92,28 +98,28 @@
                     <div class="metric-icon">📊</div>
                     <div class="metric-body">
                         <div class="metric-value" id="resTotalRows">0</div>
-                        <div class="metric-label">Total Rows</div>
+                        <div class="metric-label" data-i18n="metric_rows">Total Rows</div>
                     </div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-icon">📑</div>
                     <div class="metric-body">
                         <div class="metric-value" id="resTotalCols">0</div>
-                        <div class="metric-label">Total Columns</div>
+                        <div class="metric-label" data-i18n="metric_cols">Total Columns</div>
                     </div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-icon">⚠️</div>
                     <div class="metric-body">
                         <div class="metric-value" id="resTotalMissing">0</div>
-                        <div class="metric-label">Missing Cells</div>
+                        <div class="metric-label" data-i18n="metric_missing">Missing Cells</div>
                     </div>
                 </div>
                 <div class="metric-card" id="salesSummaryMetricCard">
                     <div class="metric-icon">💰</div>
                     <div class="metric-body">
                         <div class="metric-value" id="resSalesTotal">-</div>
-                        <div class="metric-label" id="resSalesLabel">Primary Financial Total</div>
+                        <div class="metric-label" id="resSalesLabel" data-i18n="metric_sales">Primary Financial Total</div>
                     </div>
                 </div>
             </div>
@@ -124,8 +130,8 @@
                     <div class="ai-title-wrap">
                         <span class="ai-icon">✨</span>
                         <div>
-                            <h2 class="card-title">AI ANALYSIS REPORT</h2>
-                            <p class="card-subtitle">Automated executive intelligence generated by Google Gemini</p>
+                            <h2 class="card-title" data-i18n="ai_card_title">AI ANALYSIS REPORT</h2>
+                            <p class="card-subtitle" data-i18n="ai_card_subtitle">Automated executive intelligence generated by Google Gemini</p>
                         </div>
                     </div>
                     <span class="badge badge-ai">Gemini AI</span>
@@ -142,18 +148,18 @@
             <!-- Numeric Statistics Table -->
             <section class="card" id="numericStatsCard">
                 <div class="card-header">
-                    <h2 class="card-title">📈 Numeric Column Statistics</h2>
-                    <span class="card-hint">Aggregated figures for purely numeric fields</span>
+                    <h2 class="card-title" data-i18n="num_card_title">📈 Numeric Column Statistics</h2>
+                    <span class="card-hint" data-i18n="num_card_hint">Aggregated figures for purely numeric fields</span>
                 </div>
                 <div class="card-content table-responsive">
                     <table class="data-table" id="numericTable">
                         <thead>
                             <tr>
-                                <th>Column</th>
-                                <th class="text-right">Total</th>
-                                <th class="text-right">Average</th>
-                                <th class="text-right">Minimum</th>
-                                <th class="text-right">Maximum</th>
+                                <th data-i18n="th_column">Column</th>
+                                <th class="text-right" data-i18n="th_total">Total</th>
+                                <th class="text-right" data-i18n="th_average">Average</th>
+                                <th class="text-right" data-i18n="th_minimum">Minimum</th>
+                                <th class="text-right" data-i18n="th_maximum">Maximum</th>
                             </tr>
                         </thead>
                         <tbody id="numericTableBody"></tbody>
@@ -164,17 +170,17 @@
             <!-- Missing Values Analysis -->
             <section class="card" id="missingStatsCard">
                 <div class="card-header">
-                    <h2 class="card-title">🔍 Data Quality & Missing Values</h2>
-                    <span class="card-hint">Column-by-column emptiness ratios</span>
+                    <h2 class="card-title" data-i18n="miss_card_title">🔍 Data Quality & Missing Values</h2>
+                    <span class="card-hint" data-i18n="miss_card_hint">Column-by-column emptiness ratios</span>
                 </div>
                 <div class="card-content table-responsive">
                     <table class="data-table" id="missingTable">
                         <thead>
                             <tr>
-                                <th>Column Name</th>
-                                <th class="text-right">Missing Rows</th>
-                                <th class="text-right">Total Rows</th>
-                                <th class="text-right">Missing Ratio</th>
+                                <th data-i18n="th_col_name">Column Name</th>
+                                <th class="text-right" data-i18n="th_missing_rows">Missing Rows</th>
+                                <th class="text-right" data-i18n="th_total_rows">Total Rows</th>
+                                <th class="text-right" data-i18n="th_missing_ratio">Missing Ratio</th>
                             </tr>
                         </thead>
                         <tbody id="missingTableBody"></tbody>
@@ -185,8 +191,8 @@
             <!-- Categorical Distributions -->
             <section class="card" id="categoriesCard">
                 <div class="card-header">
-                    <h2 class="card-title">🏷️ Top Categorical Distributions</h2>
-                    <span class="card-hint">Most frequent items in text fields (up to 5)</span>
+                    <h2 class="card-title" data-i18n="cat_card_title">🏷️ Top Categorical Distributions</h2>
+                    <span class="card-hint" data-i18n="cat_card_hint">Most frequent items in text fields (up to 5)</span>
                 </div>
                 <div class="card-content" id="categoriesContent"></div>
             </section>
@@ -194,8 +200,8 @@
             <!-- Raw Data Preview -->
             <section class="card" id="previewCard">
                 <div class="card-header">
-                    <h2 class="card-title">👁️ Raw Data Sample (First 5 Rows)</h2>
-                    <span class="card-hint">Quick visual check of record structure</span>
+                    <h2 class="card-title" data-i18n="prev_card_title">👁️ Raw Data Sample (First 5 Rows)</h2>
+                    <span class="card-hint" data-i18n="prev_card_hint">Quick visual check of record structure</span>
                 </div>
                 <div class="card-content table-responsive">
                     <table class="data-table preview-table" id="previewTable">
@@ -208,7 +214,7 @@
 
         <!-- Footer -->
         <footer class="app-footer">
-            <p>AI CSV Analyzer &copy; 2026 • Python & Google Gemini Integration • Built for Data Portfolio</p>
+            <p data-i18n="footer_text">AI CSV Analyzer &copy; 2026 • Python & Google Gemini Integration • Built for Data Portfolio</p>
         </footer>
     </div>
 
