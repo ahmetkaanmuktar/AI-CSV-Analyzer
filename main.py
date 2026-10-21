@@ -312,6 +312,7 @@ Generate a concise, high-value business report structured under these exact 5 he
 """
 
     try:
+        # pyrefly: ignore [missing-import]
         from google import genai
         client = genai.Client(api_key=api_key)
         response = client.models.generate_content(
